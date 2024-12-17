@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotation>
+    <folder>images</folder>
+    <filename>12d424d7-28a.jpg</filename>
+    <source>
+        <database>MyDatabase</database>
+        <annotation>COCO2017</annotation>
+        <image>flickr</image>
+        <flickrid>NULL</flickrid>
+        <annotator>1</annotator>
+    </source>
+    <owner>
+        <flickrid>NULL</flickrid>
+        <name>Label Studio</name>
+    </owner>
+    <size>
+        <width>1920</width>
+        <height>1080</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>arrow</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>474</xmin>
+            <ymin>837</ymin>
+            <xmax>619</xmax>
+            <ymax>895</ymax>
+        </bndbox>
+    </object>
+    <object>
+        <name>bus lane</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>630</xmin>
+            <ymin>779</ymin>
+            <xmax>826</xmax>
+            <ymax>822</ymax>
+        </bndbox>
+    </object>
+</annotation>

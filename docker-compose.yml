@@ -1,0 +1,7 @@
+services:
+  yolo:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/data
