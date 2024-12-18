@@ -5,7 +5,7 @@ from glob import glob
 from xml.etree import ElementTree as et
 from xml.etree.ElementTree import Element, ElementTree
 from typing import List
-from shutil import rmtree
+from shutil import rmtree, copyfile
 
 
 def label_encoding(label: str) -> int:
@@ -41,13 +41,24 @@ def delete_dir_if_exists(path: str) -> None:
     os.makedirs(directory_path)
 
 
-# def save_data(filename: str, group_by_obj: pandas.core.groupby.generic.DataFrameGroupBy) -> None:
-#     copyfile("/data/images/{filename}", "/data/generated/{filename}")
-#     basename = os.path.splitext(filename)[0]
-#     text_filename = "/data/generated/{basename}.txt"
-#     group_by_obj.get_group(filename).set_index("filename").to_csv(
-#         text_filename, index=False, header=False
-#     )
+def save_bulk(destination_directory: str, group_by_obj: pandas.core.groupby.generic.DataFrameGroupBy) -> None:
+    filename_series: pandas.Series = pandas.Series(list(group_by_obj.groups.keys()))
+    filenames: List[str] = filename_series.to_list()
+    for filename in filenames:
+        save_data(filename, destination_directory, group_by_obj)
+
+
+def save_data(filename: str, destination_directory: str,
+              group_by_obj: pandas.core.groupby.generic.DataFrameGroupBy) -> None:
+    source = "/data/images/{filename}".format(filename=filename)
+    destination = ("{destination_directory}/{filename}"
+                   .format(destination_directory=destination_directory, filename=filename))
+    basename = os.path.splitext(filename)[0]
+    text_filename = ("{destination_directory}/{basename}.txt"
+                     .format(destination_directory=destination_directory, basename=basename))
+    copyfile(source, destination)
+    group_by_obj.get_group(filename).set_index("filename").to_csv(text_filename, index=False, header=False)
+    print(source, destination, text_filename)
 
 
 xml_list: List[str] = glob("/data/annotations/train/*.xml")
@@ -121,15 +132,6 @@ groupby_obj_test: pandas.core.groupby.DataFrameGroupBy = test_df[cols].groupby("
 # print(groupby_obj_train.head())
 # print(groupby_obj_test.head())
 
-# print("\n\n\n")
-# print(groupby_obj_train)
-# om = [
-#     method_name
-#     for method_name in dir(groupby_obj_train)
-#     if callable(getattr(groupby_obj_train, method_name))
-# ]
-# for o in om:
-#     print(o)
+save_bulk('/data/generated/train', groupby_obj_train)
+save_bulk('/data/generated/test', groupby_obj_test)
 
-filename_series: pandas.Series = pandas.Series(list(groupby_obj_train.groups.keys()))
-print(filename_series)

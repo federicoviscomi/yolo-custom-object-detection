@@ -1,0 +1,12 @@
+train: data/generated/train
+val: data/generated/test
+nc: 7
+names: [
+  'arrow',
+  'bus lane',
+  'diamond',
+  'crossing',
+  'slow',
+  'right arrow',
+  'left arrow'
+]
